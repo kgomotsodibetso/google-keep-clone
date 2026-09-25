@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keep Clone</title>
+    <meta name="description" content="A simplified clone of Google Keep built with HTML, CSS and JavaScript.">
+    <link rel="icon" href="assets/icon_2026_v2_192.png" type="image/png">
+    <link rel="stylesheet" href="stylesheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top app bar -->
+    <header class="app-bar">
+        <button id="menu-toggle-btn" class="icon-btn" data-tooltip="Main menu" aria-label="Main menu" aria-expanded="false" aria-controls="sidebar">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <img src="assets/icon_2026_v2_192.png" alt="" class="app-logo" width="32" height="32">
+        <h1 class="app-title">Keep Clone</h1>
+
+        <form id="search-form" class="search-form" role="search">
+            <label for="search-input" class="visually-hidden">Search notes</label>
+            <svg class="icon search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" id="search-input" placeholder="Search notes" autocomplete="off">
+            <button type="button" id="clear-search-btn" class="icon-btn hidden" data-tooltip="Clear search" aria-label="Clear search">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </form>
+
+        <div class="app-bar-actions">
+            <button type="button" id="refresh-btn" class="icon-btn" data-tooltip="Refresh" aria-label="Refresh notes">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            </button>
+            <button type="button" id="view-toggle-btn" class="icon-btn" data-tooltip="List view" aria-label="Switch to list view" aria-pressed="false">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            </button>
+            <button type="button" id="shortcuts-btn" class="icon-btn" data-tooltip="Keyboard shortcuts" aria-label="Show keyboard shortcuts">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </button>
+            <button type="button" id="settings-btn" class="icon-btn" data-tooltip="Settings" aria-label="Open settings">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </button>
+            <div class="avatar" aria-hidden="true" title="Account">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-body">
+        <!-- Sidebar navigation -->
+        <nav id="sidebar" class="sidebar" aria-label="Note views">
+            <ul id="view-nav-list">
+                <li>
+                    <button type="button" class="nav-item" data-view="notes" data-tooltip="Notes" aria-current="page">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12.5L11 22l-8-8L12.5 3.5a3 3 0 0 1 2.12-.88h4.38a2 2 0 0 1 2 2v4.38a3 3 0 0 1-.88 2.12z"></path><circle cx="15" cy="9" r="1"></circle></svg>
+                        <span>Notes</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="nav-item" data-view="reminders" data-tooltip="Reminders">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><polyline points="12 9 12 13 15 15"></polyline><path d="M9 2h6"></path></svg>
+                        <span>Reminders</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="nav-item" data-view="labels" data-tooltip="Labels">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41L11 3.83A2 2 0 0 0 9.59 3H4a1 1 0 0 0-1 1v5.59a2 2 0 0 0 .59 1.41l9.58 9.58a2 2 0 0 0 2.82 0l4.6-4.6a2 2 0 0 0 0-2.82z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>
+                        <span>Labels</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="nav-item" data-view="archive" data-tooltip="Archive">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="1"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><line x1="10" y1="13" x2="14" y2="13"></line></svg>
+                        <span>Archive</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="nav-item" data-view="trash" data-tooltip="Trash">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                        <span>Trash</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+        <div id="sidebar-backdrop" class="sidebar-backdrop hidden"></div>
+
+        <main id="main-content" class="main-content">
+            <!-- Notes view: capture form + active notes -->
+            <section id="notes-view" class="view">
+                <form id="note-form" class="note-form">
+                    <div class="note-form-collapsed">
+                        <input type="text" id="note-title" placeholder="Title" aria-label="Note title">
+                        <textarea id="note-text" placeholder="Take a note..." aria-label="Note text" rows="1"></textarea>
+                    </div>
+                    <div class="note-form-toolbar">
+                        <button type="button" class="icon-btn form-color-btn" data-tooltip="Background options" aria-label="Background options">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"></circle><circle cx="16" cy="8" r="5"></circle><circle cx="16" cy="16" r="5"></circle></svg>
+                        </button>
+                        <button type="button" class="icon-btn form-reminder-btn" data-tooltip="Remind me" aria-label="Remind me">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><polyline points="12 9 12 13 15 15"></polyline><path d="M9 2h6"></path></svg>
+                        </button>
+                        <button type="button" id="form-close-btn" class="text-btn">Close</button>
+                        <button type="submit" id="add-note-btn" class="text-btn primary">Add Note</button>
+                    </div>
+                </form>
+
+                <div id="notes-empty-state" class="empty-state hidden">
+                    <p>Notes you add appear here</p>
+                </div>
+
+                <h2 id="pinned-heading" class="section-heading hidden">Pinned</h2>
+                <div id="pinned-list" class="notes-grid"></div>
+
+                <h2 id="others-heading" class="section-heading hidden">Others</h2>
+                <div id="notes-list" class="notes-grid"></div>
+            </section>
+
+            <!-- Reminders view -->
+            <section id="reminders-view" class="view hidden">
+                <h2 class="view-heading">Reminders</h2>
+                <div id="reminders-empty-state" class="empty-state hidden">
+                    <p>Notes with upcoming reminders appear here</p>
+                </div>
+                <div id="reminders-list" class="notes-grid"></div>
+            </section>
+
+            <!-- Labels view -->
+            <section id="labels-view" class="view hidden">
+                <h2 class="view-heading">Labels</h2>
+                <div id="labels-empty-state" class="empty-state hidden">
+                    <p>Add a label to a note to see it here</p>
+                </div>
+                <div id="labels-chip-list" class="chip-list"></div>
+                <div id="labels-list" class="notes-grid"></div>
+            </section>
+
+            <!-- Archive view -->
+            <section id="archive-view" class="view hidden">
+                <h2 class="view-heading">Archive</h2>
+                <div id="archive-empty-state" class="empty-state hidden">
+                    <p>Archived notes appear here</p>
+                </div>
+                <div id="archive-list" class="notes-grid"></div>
+            </section>
+
+            <!-- Trash view -->
+            <section id="trash-view" class="view hidden">
+                <div class="view-heading-row">
+                    <h2 class="view-heading">Trash</h2>
+                    <button type="button" id="empty-trash-btn" class="text-btn">Empty trash now</button>
+                </div>
+                <p class="view-subtext">Notes in Trash are deleted forever after 7 days.</p>
+                <div id="trash-empty-state" class="empty-state hidden">
+                    <p>No notes in Trash</p>
+                </div>
+                <div id="trash-list" class="notes-grid"></div>
+            </section>
+
+            <!-- Search results view -->
+            <section id="search-view" class="view hidden">
+                <h2 class="view-heading">Search results</h2>
+                <div id="search-empty-state" class="empty-state hidden">
+                    <p>No matching notes found</p>
+                </div>
+                <div id="search-list" class="notes-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Reusable note card template -->
+    <template id="note-card-template">
+        <article class="note-card">
+            <button type="button" class="icon-btn pin-btn" data-tooltip="Pin note" aria-label="Pin note" aria-pressed="false">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 0-5 5c0 3.5 5 11 5 11s5-7.5 5-11a5 5 0 0 0-5-5z"></path><circle cx="12" cy="7" r="2"></circle></svg>
+            </button>
+            <div class="note-card-body" role="button" tabindex="0" aria-label="Edit note">
+                <h3 class="note-card-title"></h3>
+                <p class="note-card-text"></p>
+                <span class="note-card-label chip hidden"></span>
+                <span class="note-card-reminder chip hidden"></span>
+            </div>
+            <div class="note-card-toolbar">
+                <button type="button" class="icon-btn card-color-btn" data-tooltip="Background options" aria-label="Background options">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"></circle><circle cx="16" cy="8" r="5"></circle><circle cx="16" cy="16" r="5"></circle></svg>
+                </button>
+                <button type="button" class="icon-btn card-reminder-btn" data-tooltip="Remind me" aria-label="Remind me">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><polyline points="12 9 12 13 15 15"></polyline><path d="M9 2h6"></path></svg>
+                </button>
+                <button type="button" class="icon-btn card-archive-btn" data-tooltip="Archive" aria-label="Archive note">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="1"></rect><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path><line x1="10" y1="13" x2="14" y2="13"></line></svg>
+                </button>
+                <button type="button" class="icon-btn card-unarchive-btn hidden" data-tooltip="Unarchive" aria-label="Unarchive note">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                </button>
+                <button type="button" class="icon-btn card-restore-btn hidden" data-tooltip="Restore" aria-label="Restore note">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                </button>
+                <button type="button" class="icon-btn card-delete-btn" data-tooltip="Delete" aria-label="Delete note">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                </button>
+            </div>
+        </article>
+    </template>
+
+    <!-- Shared color picker popover -->
+    <div id="color-popover" class="popover hidden" role="group" aria-label="Background colors"></div>
+
+    <!-- Shared reminder popover -->
+    <div id="reminder-popover" class="popover hidden" role="dialog" aria-label="Set reminder">
+        <label for="reminder-input" class="visually-hidden">Reminder date and time</label>
+        <input type="datetime-local" id="reminder-input">
+        <div class="popover-actions">
+            <button type="button" id="reminder-remove-btn" class="text-btn">Remove</button>
+            <button type="button" id="reminder-save-btn" class="text-btn primary">Save</button>
+        </div>
+    </div>
+
+    <!-- Edit note modal -->
+    <dialog id="edit-modal" class="modal" aria-labelledby="edit-modal-heading">
+        <div class="modal-content">
+            <h2 id="edit-modal-heading" class="visually-hidden">Edit note</h2>
+            <input type="text" id="edit-title" placeholder="Title" aria-label="Note title">
+            <textarea id="edit-text" placeholder="Take a note..." aria-label="Note text" rows="6"></textarea>
+            <label for="edit-label" class="modal-field-label">Label</label>
+            <input type="text" id="edit-label" placeholder="e.g. Work, Personal">
+            <div class="modal-toolbar">
+                <button type="button" id="edit-color-btn" class="icon-btn" data-tooltip="Background options" aria-label="Background options">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"></circle><circle cx="16" cy="8" r="5"></circle><circle cx="16" cy="16" r="5"></circle></svg>
+                </button>
+                <button type="button" id="close-modal-btn" class="text-btn">Close</button>
+                <button type="button" id="save-edit-btn" class="text-btn primary">Save</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Confirm action modal -->
+    <dialog id="confirm-modal" class="modal" aria-labelledby="confirm-message">
+        <div class="modal-content">
+            <p id="confirm-message"></p>
+            <div class="modal-toolbar">
+                <button type="button" id="confirm-cancel-btn" class="text-btn">Cancel</button>
+                <button type="button" id="confirm-ok-btn" class="text-btn primary">Confirm</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Settings modal -->
+    <dialog id="settings-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-heading">Settings</h2>
+            <label class="settings-row" for="dark-theme-toggle">
+                <span>Dark theme</span>
+                <input type="checkbox" id="dark-theme-toggle" class="switch-input">
+            </label>
+            <div class="modal-toolbar">
+                <button type="button" id="settings-close-btn" class="text-btn primary">Done</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Keyboard shortcuts modal -->
+    <dialog id="shortcuts-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-heading">Keyboard shortcuts</h2>
+            <ul class="shortcuts-list">
+                <li><kbd>Esc</kbd><span>Close the open dialog, popover, or note editor</span></li>
+                <li><kbd>Enter</kbd><span>Add the note while the title field is focused</span></li>
+                <li><kbd>Click</kbd><span>Open a note to edit it</span></li>
+            </ul>
+            <div class="modal-toolbar">
+                <button type="button" id="shortcuts-close-btn" class="text-btn primary">Got it</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Snackbar for undo-able actions -->
+    <div id="snackbar" class="snackbar hidden" role="status" aria-live="polite">
+        <span id="snackbar-message"></span>
+        <button type="button" id="snackbar-undo-btn" class="text-btn hidden">Undo</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

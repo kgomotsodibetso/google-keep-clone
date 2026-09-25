@@ -1,0 +1,879 @@
+/* ==========================================================================
+   Google Keep Clone — Stylesheet
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    --color-bg: #f8f9fa;
+    --color-surface: #fff;
+    --color-border: #e0e0e0;
+    --color-text: #202124;
+    --color-text-secondary: #5f6368;
+    --color-primary: #202124;
+    --color-accent: #fbbc04;
+    --sidebar-width: 260px;
+    --sidebar-width-collapsed: 72px;
+    --app-bar-height: 64px;
+    --radius: 8px;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.18);
+
+    --note-default: #ffffff;
+    --note-red: #f28b82;
+    --note-orange: #fbbc04;
+    --note-yellow: #fff475;
+    --note-green: #ccff90;
+    --note-teal: #a7ffeb;
+    --note-blue: #cbf0f8;
+    --note-darkblue: #aecbfa;
+    --note-purple: #d7aefb;
+    --note-pink: #fdcfe8;
+    --note-brown: #e6c9a8;
+    --note-gray: #e8eaed;
+}
+
+:root[data-theme="dark"] {
+    --color-bg: #202124;
+    --color-surface: #2d2e30;
+    --color-border: #5f6368;
+    --color-text: #e8eaed;
+    --color-text-secondary: #9aa0a6;
+    --note-default: #2d2e30;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="dark"] .icon-btn:hover,
+:root[data-theme="dark"] .icon-btn:focus-visible,
+:root[data-theme="dark"] .nav-item:hover,
+:root[data-theme="dark"] .text-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] .icon-btn.active {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+:root[data-theme="dark"] .search-form {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme="dark"] .search-form:focus-within {
+    background: var(--color-surface);
+}
+
+:root[data-theme="dark"] .chip,
+:root[data-theme="dark"] .switch-input {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+:root[data-theme="dark"] .nav-item[aria-current="page"] {
+    background: #4a4526;
+}
+
+:root[data-theme="dark"] .note-card-tinted {
+    color: #202124;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    color: var(--color-text);
+    background: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+input, textarea {
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--color-text);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+/* ==========================================================================
+   App bar
+   ========================================================================== */
+
+.app-bar {
+    height: var(--app-bar-height);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.app-logo {
+    border-radius: 4px;
+}
+
+.app-title {
+    font-size: 1.375rem;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    margin: 0 24px 0 4px;
+    white-space: nowrap;
+}
+
+.icon-btn {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.icon-btn:hover,
+.icon-btn:focus-visible {
+    background: rgba(60, 64, 67, 0.08);
+}
+
+.icon-btn.active {
+    color: var(--color-primary);
+    background: rgba(60, 64, 67, 0.12);
+}
+
+.pin-btn.active .icon {
+    fill: currentColor;
+}
+
+.search-form {
+    flex: 1;
+    min-width: 0;
+    max-width: 720px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--color-bg);
+    border-radius: var(--radius);
+    padding: 0 16px;
+    height: 46px;
+}
+
+.search-form:focus-within {
+    background: var(--color-surface);
+    box-shadow: var(--shadow-1);
+}
+
+.search-icon {
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.search-form input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+}
+
+.app-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.icon-btn.spinning .icon {
+    animation: icon-spin 0.6s linear;
+}
+
+@keyframes icon-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+    border-radius: 50%;
+    background: #1a73e8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.avatar .icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Tooltips: custom, CSS-driven (data-tooltip attribute) */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    background: #3c4043;
+    color: #fff;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 40;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    transition-delay: 0.4s;
+}
+
+/* ==========================================================================
+   App body: sidebar + main content
+   ========================================================================== */
+
+.app-body {
+    display: flex;
+    min-height: calc(100vh - var(--app-bar-height));
+}
+
+.sidebar {
+    width: var(--sidebar-width-collapsed);
+    flex-shrink: 0;
+    background: var(--color-surface);
+    padding-top: 8px;
+    transition: width 0.15s ease;
+}
+
+.sidebar.expanded {
+    width: var(--sidebar-width);
+}
+
+/* Hide labels via display:none (not overflow clipping) so tooltips on the
+   collapsed icon-only nav items aren't cut off by a clipped ancestor. */
+.sidebar:not(.expanded) .nav-item span {
+    display: none;
+}
+
+.sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border: none;
+    background: transparent;
+    padding: 0 24px;
+    height: 48px;
+    border-radius: 0 24px 24px 0;
+    color: var(--color-text);
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.nav-item .icon {
+    flex-shrink: 0;
+    color: var(--color-text-secondary);
+}
+
+.nav-item:hover,
+.nav-item:focus-visible {
+    background: rgba(60, 64, 67, 0.08);
+}
+
+.nav-item[aria-current="page"] {
+    background: var(--note-yellow);
+}
+
+.nav-item[aria-current="page"] .icon {
+    color: var(--color-text);
+}
+
+.sidebar-backdrop {
+    display: none;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 24px 32px 80px;
+}
+
+.view-heading {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin: 0 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.view-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.view-subtext {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    margin: -8px 0 16px;
+}
+
+.section-heading {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 24px 0 12px;
+}
+
+.empty-state {
+    text-align: center;
+    color: #9aa0a6;
+    font-size: 1.1rem;
+    padding: 80px 16px;
+}
+
+/* ==========================================================================
+   Note capture form
+   ========================================================================== */
+
+.note-form {
+    max-width: 600px;
+    margin: 0 auto 32px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-1);
+    padding: 12px 16px;
+}
+
+.note-form-collapsed {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#note-title {
+    display: none;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.note-form.expanded #note-title {
+    display: block;
+}
+
+#note-text {
+    border: none;
+    outline: none;
+    resize: none;
+    font-size: 0.95rem;
+    font-family: inherit;
+    min-height: 24px;
+}
+
+.note-form-toolbar {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.note-form.expanded .note-form-toolbar {
+    display: flex;
+}
+
+.note-form-toolbar .text-btn {
+    margin-left: auto;
+}
+
+.note-form.expanded {
+    padding-bottom: 8px;
+}
+
+.text-btn {
+    border: none;
+    background: transparent;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.text-btn:hover,
+.text-btn:focus-visible {
+    background: rgba(60, 64, 67, 0.08);
+}
+
+.text-btn.primary {
+    color: #1a73e8;
+}
+
+/* ==========================================================================
+   Notes grid + note cards (masonry via CSS columns)
+   ========================================================================== */
+
+.notes-grid {
+    column-width: 240px;
+    column-gap: 16px;
+}
+
+.notes-grid.list-view {
+    column-count: 1;
+    column-width: auto;
+    max-width: 700px;
+}
+
+.note-card {
+    background: var(--note-default);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 12px 12px 4px;
+    margin: 0 0 16px;
+    break-inside: avoid;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.15s ease;
+}
+
+.note-card:hover {
+    box-shadow: var(--shadow-2);
+}
+
+.note-card:hover .note-card-toolbar,
+.note-card:focus-within .note-card-toolbar {
+    opacity: 1;
+}
+
+.note-card .pin-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    opacity: 0;
+}
+
+.note-card:hover .pin-btn,
+.note-card:focus-within .pin-btn,
+.note-card .pin-btn.active {
+    opacity: 1;
+}
+
+.note-card-body {
+    cursor: pointer;
+    min-height: 32px;
+    padding: 4px 28px 8px 4px;
+}
+
+.note-card-title {
+    margin: 0 0 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.note-card-title:empty {
+    display: none;
+}
+
+.note-card-text {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin: 8px 4px 0 0;
+}
+
+.note-card-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    min-height: 40px;
+}
+
+/* ==========================================================================
+   Label chips (Labels view)
+   ========================================================================== */
+
+.chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.label-chip {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    border-radius: 16px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    color: var(--color-text);
+}
+
+.label-chip:hover,
+.label-chip:focus-visible {
+    background: rgba(60, 64, 67, 0.08);
+}
+
+.label-chip.active {
+    background: var(--color-text);
+    color: var(--color-surface);
+    border-color: var(--color-text);
+}
+
+/* ==========================================================================
+   Popovers (color picker, reminder picker)
+   ========================================================================== */
+
+.popover {
+    position: fixed;
+    z-index: 50;
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-2);
+    padding: 12px;
+}
+
+.color-swatch-row {
+    display: grid;
+    grid-template-columns: repeat(6, 28px);
+    gap: 6px;
+}
+
+.color-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    padding: 0;
+    position: relative;
+}
+
+.color-swatch.active::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px solid #1a73e8;
+    border-radius: 50%;
+}
+
+#reminder-popover {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 260px;
+}
+
+.popover-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+#reminder-input {
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 8px;
+}
+
+/* ==========================================================================
+   Modals (native <dialog>)
+   ========================================================================== */
+
+.modal {
+    border: none;
+    border-radius: var(--radius);
+    padding: 0;
+    width: min(560px, 90vw);
+    box-shadow: var(--shadow-2);
+}
+
+.modal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 4px;
+}
+
+.modal-content input[type="text"],
+.modal-content textarea {
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.modal-content #edit-title {
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+
+.modal-content textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.modal-field-label {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-top: 8px;
+}
+
+.modal-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 16px;
+}
+
+.modal-toolbar .text-btn {
+    margin-left: auto;
+}
+
+.modal-toolbar .icon-btn {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+#confirm-message {
+    margin: 0 0 8px;
+    font-size: 0.95rem;
+}
+
+.modal-heading {
+    margin: 0 0 8px;
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.switch-input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 36px;
+    height: 20px;
+    margin: 0;
+    background: #c4c7c5;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.switch-input::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.15s ease;
+}
+
+.switch-input:checked {
+    background: #1a73e8;
+}
+
+.switch-input:checked::after {
+    transform: translateX(16px);
+}
+
+.shortcuts-list {
+    list-style: none;
+    margin: 0 0 8px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.shortcuts-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.875rem;
+}
+
+.shortcuts-list kbd {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   Snackbar
+   ========================================================================== */
+
+.snackbar {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    background: #323232;
+    color: #fff;
+    padding: 8px 8px 8px 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: var(--shadow-2);
+    z-index: 60;
+    font-size: 0.875rem;
+    animation: snackbar-in 0.2s ease;
+}
+
+@keyframes snackbar-in {
+    from { transform: translateY(16px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.snackbar .text-btn {
+    color: #8ab4f8;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 800px) {
+    .app-title {
+        display: none;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: var(--app-bar-height);
+        left: 0;
+        bottom: 0;
+        width: 0;
+        z-index: 30;
+        box-shadow: var(--shadow-2);
+    }
+
+    .sidebar.expanded {
+        width: var(--sidebar-width);
+    }
+
+    .sidebar-backdrop.expanded {
+        display: block;
+        position: fixed;
+        inset: var(--app-bar-height) 0 0 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 25;
+    }
+
+    .main-content {
+        padding: 16px 16px 80px;
+    }
+
+    .notes-grid {
+        column-count: 1;
+        column-width: auto;
+    }
+
+    .snackbar {
+        left: 16px;
+        right: 16px;
+    }
+}
